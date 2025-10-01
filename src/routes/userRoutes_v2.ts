@@ -97,7 +97,7 @@ router.post("/login", (req: Request, res: Response) => {
       role: user.role,
     },
     jwt_secret,
-    { expiresIn: "30m" }
+    { expiresIn: "60m" }
   );
 
   // 4. send HTTP response with JWT token

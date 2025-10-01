@@ -16,14 +16,20 @@ export const checkRoleStudent = (
   // 1. get "user payload" and "token" from (custom) request
   const payload = req.user;
   const token = req.token;
+  const Id = req.params.studentId;
 
   // 2. check if user exists (search with username) and role is ADMIN
   const user = users.find((u: User) => u.username === payload?.username);
-  console.log(user?.studentId);
   if (!user || user.role !== "STUDENT") {
     return res.status(401).json({
       success: false,
       message: "Unauthorized user",
+    });
+  }
+  if (!user || user.role !== "STUDENT" || payload?.studentId !== Id) {
+    return res.status(403).json({
+      success: false,
+      message: "Forbidden access",
     });
   }
 
@@ -45,14 +51,37 @@ export const checkRoleSA = (
 
   // 2. check if user exists (search with username) and role is ADMIN
   const user = users.find((u: User) => u.username === payload?.username);
-  console.log(user?.studentId);
-  if(user?.role === "ADMIN"){
+  if (user?.role === "ADMIN") {
     next();
   }
   if (!user || payload?.studentId !== Id) {
     return res.status(403).json({
       success: false,
       message: "Forbidden access",
+    });
+  }
+
+  // (optional) check if token exists in user data
+
+  // Proceed to next middleware or route handler
+  next();
+};
+export const checkStudentofDelete = (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  // 1. get "user payload" and "token" from (custom) request
+  const payload = req.user;
+  const token = req.token;
+  const Id = req.params.studentId;
+
+  // 2. check if user exists (search with username) and role is ADMIN
+  const user = users.find((u: User) => u.username === payload?.username);
+  if (!user || payload?.studentId !== Id) {
+    return res.status(403).json({
+      success: false,
+      message: "You are not allowed to modify another student's data",
     });
   }
 

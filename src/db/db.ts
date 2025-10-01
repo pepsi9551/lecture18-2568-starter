@@ -49,20 +49,16 @@ export let courses: Course[] = [
 
 export let enrollments: Enrollment[] = [
   {
-    studentId: "650610002",
-    courseId: "261207",
+    studentId: "650610001",
+    courseId: [],
   },
   {
     studentId: "650610002",
-    courseId: "261497",
+    courseId: ["261207", "261497"],
   },
   {
     studentId: "650610003",
-    courseId: "269101",
-  },
-  {
-    studentId: "650610003",
-    courseId: "261497",
+    courseId: ["261497","269101"],
   },
 ];
 

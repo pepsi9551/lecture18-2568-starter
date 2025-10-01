@@ -114,7 +114,7 @@ router.post("/:studentId",authenticateToken, checkRoleStudent, (req: Request, re
     const enrollment = enrollments.find((e) => e.studentId === student.studentId);
     const dcourse = enrollment?.courseId?.find((c) => c === courseId);
     if (dcourse) {
-        return res.status(403).json({
+        return res.status(409).json({
             success:false,
             message: "studentId && courseId is already exists"
         })
